@@ -1,3 +1,9 @@
+/* Family font for the body of the main index*/
+@font-face {
+  font-family: bodyFont;
+  src: url(../fonts/Gugi-Regular.ttf);
+}
+
 body {
-  color: red;
+  font-family: bodyFont;
 }
