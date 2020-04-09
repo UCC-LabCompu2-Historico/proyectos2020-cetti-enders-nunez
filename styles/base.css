@@ -7,3 +7,15 @@
 body {
   font-family: bodyFont;
 }
+
+.back_btn {
+  display: none;
+}
+
+#game {
+  display: none;
+}
+
+#tutorial {
+  display: none;
+}
