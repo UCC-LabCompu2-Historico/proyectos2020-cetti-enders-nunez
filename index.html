@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,20 +8,47 @@
   <link rel="stylesheet" type="text/css" href="styles/base.css">
   <title>Tetris</title>
 </head>
+
 <body>
   <div id="menu">
-    <h1>TETRIS</h1>
-    <button id="game_btn">Jugar</button>
-    <button id="tutorial_btn">Tutorial</button>
+    <div class="row">
+      <div class="col-12 col-s-12">
+        <h1 class="title">TETRIS</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <button class="title_btn" id="game_btn">Jugar</button>
+      </div>
+      <div class="col-6">
+        <button class="title_btn" id="tutorial_btn">Tutorial</button>
+      </div>
+    </div>
   </div>
+
   <div id="game">
-    <button id="back_game_btn" class="back_btn">Atras</button>
-    <h1>Juego</h1>
+    <div class="row">
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <button id="back_game_btn" class="back_btn">Atras</button>
+      </div>
+      <div class="col-4">
+        <h1 class="title">Juego</h1>
+      </div>
+      <div class="col-4"></div>
+    </div>
   </div>
+
   <div id="tutorial">
-    <button id="back_tuto_btn" class="back_btn">Atras</button>
-    <h1>Tutorial</h1>
+    <div class="row">
+      <button id="back_tuto_btn" class="back_btn">Atras</button>
+    </div>
+    <div class="row">
+      <h1 class="title">Tutorial</h1>
+    </div>
   </div>
   <script src="js/main.js"></script>
 </body>
+
 </html>
