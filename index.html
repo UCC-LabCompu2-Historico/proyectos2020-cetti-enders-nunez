@@ -13,28 +13,26 @@
   <div id="menu">
     <div class="row">
       <div class="col-12 col-s-12">
-        <h1 class="title">TETRIS</h1>
+        <h1 class="main_title">TETRIS</h1>
       </div>
     </div>
     <div class="row">
       <div class="col-6">
-        <button class="title_btn" id="game_btn">Jugar</button>
+        <button class="button title_btn" id="game_btn">Jugar</button>
       </div>
       <div class="col-6">
-        <button class="title_btn" id="tutorial_btn">Tutorial</button>
+        <button class="button title_btn" id="tutorial_btn">Tutorial</button>
       </div>
     </div>
   </div>
 
   <div id="game">
     <div class="row">
-    </div>
-    <div class="row">
       <div class="col-4">
-        <button id="back_game_btn" class="back_btn">Atras</button>
+        <button id="back_game_btn" class="button back_btn">Atras</button>
       </div>
-      <div class="col-4">
-        <h1 class="title">Juego</h1>
+      <div class="col-4 game_canvas">
+        <canvas style="height: 580px;"></canvas>
       </div>
       <div class="col-4"></div>
     </div>
@@ -42,10 +40,38 @@
 
   <div id="tutorial">
     <div class="row">
-      <button id="back_tuto_btn" class="back_btn">Atras</button>
+      <div class="col-3">
+        <button id="back_tuto_btn" class="button back_btn">Atras</button>
+      </div>
+      <div class="col-6">
+        <h1 class="title">Tutorial</h1>
+      </div>
+      <div class="col-3">
+      </div>
     </div>
     <div class="row">
-      <h1 class="title">Tutorial</h1>
+      <div class="col-3"></div>
+      <div class="col-6">
+        <p style="text-align: center;">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend id quam efficitur finibus. Nunc et
+          feugiat massa, in elementum eros. Integer nec elit a tortor euismod auctor vel vitae nibh. Sed eget urna
+          libero. Sed sit amet neque quam. Maecenas non aliquet ante. Aliquam sit amet enim sit amet risus iaculis
+          accumsan. Duis aliquam dolor sed mattis laoreet. Sed id quam eget nibh finibus sollicitudin. Vivamus sed eros
+          non nulla ultricies dictum vitae a nibh. Duis id tellus ut dolor aliquam vestibulum. Donec finibus arcu
+          tincidunt pulvinar scelerisque. Praesent viverra nunc varius risus consequat consectetur. Duis in elit vel
+          lectus consectetur consectetur non nec magna.
+
+          In nec sollicitudin diam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
+          himenaeos. Nam eleifend, risus ac euismod ullamcorper, quam velit fermentum neque, condimentum tempor ante
+          nibh nec augue. Aliquam congue mi eu ex placerat, in auctor dui malesuada. Nulla semper, nibh porttitor semper
+          dapibus, augue odio imperdiet felis, a cursus metus risus ac quam. Quisque tellus mauris, vehicula quis lacus
+          et, hendrerit malesuada purus. Praesent pretium id enim in aliquet. Aenean sit amet rhoncus risus. Donec porta
+          eget diam vel dignissim. Nullam placerat sed justo quis bibendum. Morbi sed sodales diam. Cras et turpis
+          elementum, porttitor augue a, mattis quam. Etiam magna est, eleifend eget purus in, pharetra consequat diam.
+          Donec nec neque dui. Phasellus condimentum dictum condimentum.
+        </p>
+      </div>
+      <div class="col-3"></div>
     </div>
   </div>
   <script src="js/main.js"></script>

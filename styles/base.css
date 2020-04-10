@@ -8,20 +8,51 @@ body {
   font-family: bodyFont;
 }
 
+.main_title {
+  animation-name: example;
+  font-size: 75px;
+  animation-duration: 40s;
+  margin-top: 50px;
+  text-align: center;
+  margin-bottom: 75px;
+}
+
 .title {
   text-align: center;
-  margin-bottom: 15px;
+}
+
+@keyframes example {
+  0%   {color: red;}
+  25%  {color: yellow;}
+  50%  {color: blue;}
+  100% {color: green;}
+}
+
+.button {
+  background-color: #555555; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
 .title_btn {
   font-family: bodyFont;
-  margin-top: 15px;
   width: 100%;
 }
 
 .back_btn {
   font-family: bodyFont;
   display: none;
+}
+
+.game_canvas {
+  background-color: black;
 }
 
 #game {
@@ -48,7 +79,6 @@ body {
 }
 
 @media only screen {
-  /* For desktop: */
   .col-1 {width: 8.33%;}
   .col-2 {width: 16.66%;}
   .col-3 {width: 25%;}
