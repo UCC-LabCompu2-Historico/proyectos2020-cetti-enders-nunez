@@ -11,7 +11,7 @@
 
 <body>
   <div id="menu">
-    <div id="troll" class="col-5">
+    <div id="menu_container" class="col-5">
       <h1 class="main_title">TETRIS</h1>
       <button class="button title_btn" id="game_btn">Jugar</button>
       <button class="button title_btn" id="tutorial_btn">Tutorial</button>
@@ -19,20 +19,18 @@
   </div>
 
   <div id="game">
-    <div class="row">
-      <div class="col-4">
-        <button id="back_game_btn" class="button back_btn">Atras</button>
-      </div>
-      <div class="col-4 game_canvas">
-        <canvas style="height: 580px;"></canvas>
-      </div>
-      <div class="col-4"></div>
+    <button id="back_game_btn" class="button back_btn">Atras</button>
+    <div id="game_container" class="col-5">
+
+      <h1 class="title">Juego</h1>
+      <canvas class="game_canvas"></canvas>
     </div>
   </div>
 
   <div id="tutorial">
-    <div id="nuevo_troll" class="col-5">
-      <button id="back_tuto_btn" class="button back_btn">Atras</button>
+    <button id="back_tuto_btn" class="button back_btn">Atras</button>
+    <div id="tuto_container" class="col-5">
+
       <h1 class="title">Tutorial</h1>
       <p style="text-align: center;">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend id quam efficitur finibus. Nunc et

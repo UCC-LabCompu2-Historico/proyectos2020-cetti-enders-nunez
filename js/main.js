@@ -25,7 +25,7 @@ back_tuto_btn.onclick = () => {
 
 game_btn.onclick = () => {
   change_display(back_game_btn, "block");
-  change_display(game, "block");
+  change_display(game, "flex");
   change_display(menu, "none");
 }
 
