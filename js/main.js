@@ -14,12 +14,12 @@ function change_display(element, display) {
 back_game_btn.onclick = () => {
   change_display(back_game_btn, "none");
   change_display(game, "none");
-  change_display(menu, "block");
+  change_display(menu, "flex");
 }
 
 back_tuto_btn.onclick = () => {
   change_display(back_tuto_btn, "none");
-  change_display(menu, "block");
+  change_display(menu, "flex");
   change_display(tutorial, "none");
 }
 
@@ -32,5 +32,5 @@ game_btn.onclick = () => {
 tutorial_btn.onclick = () => {
   change_display(back_tuto_btn, "block");
   change_display(menu, "none");
-  change_display(tutorial, "block");
+  change_display(tutorial, "flex");
 }
