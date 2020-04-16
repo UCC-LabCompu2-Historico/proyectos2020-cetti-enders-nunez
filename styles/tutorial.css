@@ -1,0 +1,11 @@
+#tutorial {
+  display: none;
+  justify-content: center;
+  height: 100%;
+}
+
+#tuto_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

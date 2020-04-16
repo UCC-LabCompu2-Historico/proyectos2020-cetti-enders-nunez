@@ -1,0 +1,51 @@
+#menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+#menu_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.main_title {
+  font-size: 100px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0.4, #e5e5e5),
+    color-stop(0.45, #d2d2d2)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.menu_btn {
+  font-family: bodyFont;
+  margin: 5px;
+  font-size: 20px;
+}
+
+#game_btn {
+  background-color: #72CB3B;
+}
+
+#game_btn:hover {
+  background-color: red;
+  border: 2px solid #72CB3B;
+}
+
+#tutorial_btn {
+  background-color: #FFD500;
+}
+
+#tutorial_btn:hover {
+  background-color: red;
+  border: 2px solid #FFD500;
+}

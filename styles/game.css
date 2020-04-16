@@ -1,0 +1,17 @@
+#game {
+  display: none;
+  justify-content: center;
+  height: 100%;
+}
+
+#game_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game_canvas {
+  background-color: black;
+  width: 70%;
+  height: 85%;
+}
