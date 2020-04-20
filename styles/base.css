@@ -24,6 +24,11 @@ body {
   background-attachment: fixed;
   font-family: bodyFont;
   background-image: linear-gradient(to bottom, #021B79, #0575E6, #205E9B);
+  color: white;
+}
+
+p {
+  text-align: center;
 }
 
 [class*="col-"] {
@@ -63,10 +68,20 @@ body {
 
 .back_btn {
   font-family: bodyFont;
+  height: 60px;
 }
 
 .row::after {
   content: "";
   clear: both;
   display: table;
+}
+
+.grid_container {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.subtitle {
+  text-align: right;
 }
