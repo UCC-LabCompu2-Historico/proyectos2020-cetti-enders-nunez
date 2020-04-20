@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,53 @@
   <link rel="stylesheet" type="text/css" href="styles/base.css">
   <title>Tetris</title>
 </head>
+
 <body>
-  <h1>TETRIS</h1>  
+  <div id="menu">
+    <div id="menu_container" class="col-5">
+      <h1 class="main_title">TETRIS</h1>
+      <button class="button menu_btn" id="game_btn">Jugar</button>
+      <button class="button menu_btn" id="tutorial_btn">Tutorial</button>
+    </div>
+  </div>
+
+  <div id="game">
+    <div class="grid_container col-6">
+      <button id="back_game_btn" class="button back_btn">Atras</button>
+      <h1 class="subtitle">Juego</h1>
+    </div>
+    <div id="game_container" class="col-7">
+      <canvas class="game_canvas"></canvas>
+    </div>
+  </div>
+
+  <div id="tutorial">
+    <div class="grid_container col-6">
+      <button id="back_tuto_btn" class="button back_btn">Atras</button>
+      <h1 class="subtitle">Tutorial</h1>
+    </div>
+    <div id="tuto_container" class="col-7">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend id quam efficitur finibus. Nunc et
+        feugiat massa, in elementum eros. Integer nec elit a tortor euismod auctor vel vitae nibh. Sed eget urna
+        libero. Sed sit amet neque quam. Maecenas non aliquet ante. Aliquam sit amet enim sit amet risus iaculis
+        accumsan. Duis aliquam dolor sed mattis laoreet. Sed id quam eget nibh finibus sollicitudin. Vivamus sed eros
+        non nulla ultricies dictum vitae a nibh. Duis id tellus ut dolor aliquam vestibulum. Donec finibus arcu
+        tincidunt pulvinar scelerisque. Praesent viverra nunc varius risus consequat consectetur. Duis in elit vel
+        lectus consectetur consectetur non nec magna.
+
+        In nec sollicitudin diam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos
+        himenaeos. Nam eleifend, risus ac euismod ullamcorper, quam velit fermentum neque, condimentum tempor ante
+        nibh nec augue. Aliquam congue mi eu ex placerat, in auctor dui malesuada. Nulla semper, nibh porttitor semper
+        dapibus, augue odio imperdiet felis, a cursus metus risus ac quam. Quisque tellus mauris, vehicula quis lacus
+        et, hendrerit malesuada purus. Praesent pretium id enim in aliquet. Aenean sit amet rhoncus risus. Donec porta
+        eget diam vel dignissim. Nullam placerat sed justo quis bibendum. Morbi sed sodales diam. Cras et turpis
+        elementum, porttitor augue a, mattis quam. Etiam magna est, eleifend eget purus in, pharetra consequat diam.
+        Donec nec neque dui. Phasellus condimentum dictum condimentum.
+      </p>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
 </body>
+
 </html>
