@@ -10,3 +10,16 @@
   align-items: center;
   flex-direction: column;
 }
+
+#L_R_arrows{
+  width: 150px;
+}
+
+#up_arrow{
+  width: 75px;
+}
+
+#down_arrow{
+  width: 75px;
+  transform: rotate(180deg);
+}
