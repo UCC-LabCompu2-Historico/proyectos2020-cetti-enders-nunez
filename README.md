@@ -9,4 +9,5 @@ Decidimos desarrollar el juego [Tetris](https://en.wikipedia.org/wiki/Tetris). N
 ## Integrantes
 
 * Cetti, Mateo Pablo (2011861)
+* Enders, Guillermo (2012036)
 * Nuñez, Ivan Luis (2011640)
