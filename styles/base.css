@@ -85,3 +85,13 @@ p {
 .subtitle {
   text-align: right;
 }
+
+.music_btn{
+  background-color: transparent;
+  width: 20px;
+  border: none;
+}
+
+.music_img{
+  height: 20px;
+}
