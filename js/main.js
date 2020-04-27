@@ -13,15 +13,14 @@ let tutorial_btn = document.getElementById("tutorial_btn");
 let music_img = document.getElementById("music_img");
 let music_player = document.getElementById("music_player");
 
-music_btn.onclick = () => {
-  if(music_player.muted == false) {
-    music_player.muted = true;
-    music_img.src = "/assets/mute.png"
-  }
-  else {
-    music_player.muted = false;
-    music_img.src = "/assets/no_mute.png"
-  }
+music_player.src = "/assets/halo_theme.mp3";
+music_player.volume = 0.25;
+music_player.load();
+
+function play_music(song){
+  music_player.src = "/assets/"+song;
+  music_player.load();
+  music_player.play()
 }
 
 function change_display(element, display) {
@@ -32,11 +31,7 @@ back_game_btn.onclick = () => {
   change_display(back_game_btn, "none");
   change_display(game, "none");
   change_display(menu, "flex");
-
-  music_player.pause();
-  music_player.src = "/assets/halo_theme.mp3";
-  music_player.load();
-  music_player.play();
+  play_music("halo_theme.mp3")
 }
 
 back_tuto_btn.onclick = () => {
@@ -52,10 +47,7 @@ game_btn.onclick = () => {
 
   setInterval(() => g.render(), 1000);
 
-  music_player.pause();
-  music_player.src = "/assets/tetris_theme.mp3";
-  music_player.load();
-  music_player.play();
+  play_music("tetris_theme.mp3")
 }
 
 tutorial_btn.onclick = () => {
@@ -63,3 +55,18 @@ tutorial_btn.onclick = () => {
   change_display(menu, "none");
   change_display(tutorial, "flex");
 }
+
+music_btn.onclick = () => {
+  if(music_player.muted == true) {
+    music_player.muted = false;
+    music_img.src = "/assets/no_mute.png"
+  }
+  else {
+    music_player.muted = true;
+    music_img.src = "/assets/mute.png"
+  }
+}
+
+document.body.addEventListener("mousemove", function () {
+  music_player.play();
+})

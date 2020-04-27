@@ -13,7 +13,6 @@ export default class Game {
     this.ctx.fillStyle = "green";
     this.ctx.fillRect(10, 35, 300, 630);
     this.ctx.fillStyle = "red";
-    console.log(this.board.width, this.board.height);
     this.ctx.fillRect(10, this.y, 30, 30);
     this.y += 30;
   }
