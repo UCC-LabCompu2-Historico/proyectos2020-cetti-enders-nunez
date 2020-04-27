@@ -1,20 +1,24 @@
-game = document.getElementById("game");
-menu = document.getElementById("menu");
-tutorial = document.getElementById("tutorial");
+import Game from "./game.js";
 
-back_game_btn = document.getElementById("back_game_btn");
-back_tuto_btn = document.getElementById("back_tuto_btn");
-game_btn = document.getElementById("game_btn");
-tutorial_btn = document.getElementById("tutorial_btn");
-music_img = document.getElementById("music_img");
-music_player = document.getElementById("music_player");
+let g = new Game();
 
-music_btn.onclick = () =>{
-  if(music_player.muted == false){
+let game = document.getElementById("game");
+let menu = document.getElementById("menu");
+let tutorial = document.getElementById("tutorial");
+
+let back_game_btn = document.getElementById("back_game_btn");
+let back_tuto_btn = document.getElementById("back_tuto_btn");
+let game_btn = document.getElementById("game_btn");
+let tutorial_btn = document.getElementById("tutorial_btn");
+let music_img = document.getElementById("music_img");
+let music_player = document.getElementById("music_player");
+
+music_btn.onclick = () => {
+  if(music_player.muted == false) {
     music_player.muted = true;
     music_img.src = "/assets/mute.png"
   }
-  else{
+  else {
     music_player.muted = false;
     music_img.src = "/assets/no_mute.png"
   }
@@ -45,6 +49,8 @@ game_btn.onclick = () => {
   change_display(back_game_btn, "block");
   change_display(game, "flex");
   change_display(menu, "none");
+
+  setInterval(() => g.render(), 1000);
 
   music_player.pause();
   music_player.src = "/assets/tetris_theme.mp3";

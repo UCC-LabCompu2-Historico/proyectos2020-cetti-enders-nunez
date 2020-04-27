@@ -11,9 +11,3 @@
   flex-direction: column;
   height: 700px;
 }
-
-.game_canvas {
-  background-color: black;
-  width: 100%;
-  height: 100%;
-}
