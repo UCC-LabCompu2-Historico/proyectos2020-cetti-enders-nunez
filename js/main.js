@@ -1,6 +1,4 @@
-import Game from "./game.js";
-
-let g = new Game();
+import play from "./game.js";
 
 let game = document.getElementById("game");
 let menu = document.getElementById("menu");
@@ -20,7 +18,7 @@ music_player.load();
 function play_music(song){
   music_player.src = "/assets/"+song;
   music_player.load();
-  music_player.play()
+  // music_player.play()
 }
 
 function change_display(element, display) {
@@ -45,7 +43,7 @@ game_btn.onclick = () => {
   change_display(game, "flex");
   change_display(menu, "none");
 
-  setInterval(() => g.render(), 1000);
+  setTimeout(() => { play() }, 700);
 
   play_music("tetris_theme.mp3")
 }
@@ -67,6 +65,8 @@ music_btn.onclick = () => {
   }
 }
 
+/*
 document.body.addEventListener("mousemove", function () {
   music_player.play();
 })
+*/
