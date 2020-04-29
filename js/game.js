@@ -6,18 +6,42 @@ let dropCounter = 0;
 let dropInterval = 1000;
 let lastTime = 0;
 
+const board = create_matrix(10, 21);
 const matrix = [
   [0, 1, 0],
   [1, 1, 1],
-  [0, 0, 0]
+  [0, 0, 0],
 ];
 
 const player = {
   matrix: matrix,
-  pos: { x: 10, y: 45 }
+  pos: { x: 70, y: 45 }
 };
 
-function drawMatrix(matrix, pos) {
+function create_matrix(w, h){
+  const matrix = []
+  while(h !== 0){
+    matrix.push(new Array(w).fill(0));
+    h--;
+  }
+  return matrix;
+}
+
+function collide(board, player){
+  const matrix = player.matrix;
+  const offset_x = (player.pos.x-10)/cell_size;
+  const offset_y = (player.pos.y-45)/cell_size;
+  for (let y = 0; y < matrix.length; y++){
+    for(let x = 0; x < matrix[y].length; x++){
+      if(matrix[y][x] !== 0 && (board [y+offset_y] && board [y+offset_y][x+offset_x]) !== 0){
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function draw_matrix(matrix, pos) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
@@ -28,14 +52,72 @@ function drawMatrix(matrix, pos) {
   });
 }
 
+function merge(board, player){
+  player.matrix.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if(value !==0){
+        board[y+(player.pos.y-45)/cell_size][x+(player.pos.x-10)/cell_size] = value;
+      }
+    });
+  });
+}
+
+function rotate(matrix, dir){
+  console.log("hola");
+  for (let y = 0; y<matrix.length;y++){
+    for(let x = 0; x<y; x++){
+      let temp = matrix[x][y];
+      matrix[x][y] = matrix [y][x];
+      matrix[y][x] = temp;
+    }
+  }
+  if (dir > 0) {
+    matrix.forEach(row => row.reverse());
+  } else {
+    matrix.reverse();
+  }
+}
+
+function p_move(offset) {
+  player.pos.x += offset;
+  if (collide(board, player)) {
+      player.pos.x -= offset;
+  }
+}
+
+function p_drop(){
+  player.pos.y+= cell_size;
+  if (collide(board, player)) {
+    player.pos.y-=cell_size;
+    merge(board, player);
+    player.pos.x=70;
+    player.pos.y=45;
+}
+dropCounter = 0;
+}
+
+function p_rotate() {
+  const pos = player.pos.x;
+  let offset = cell_size;
+  rotate(player.matrix, 1);
+  while (collide(board, player)) {
+      if((player.pos.x-10)/cell_size < 0){
+        player.pos.x += cell_size;
+      }
+      else{
+        player.pos.x -= cell_size;
+      }
+  }
+}
+
 function render() {
   context.fillStyle = "green";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   context.fillStyle = "black";
   context.fillRect(10, 45, 300, 630);
-
-  drawMatrix(player.matrix, player.pos);
+  draw_matrix(board, {x: 10, y:45});
+  draw_matrix(player.matrix, player.pos);
 }
 
 function update(time = 0) {
@@ -43,8 +125,7 @@ function update(time = 0) {
 
   dropCounter += deltaTime;
   if (dropCounter > dropInterval) {
-    console.log("Entro");
-    player.pos.y += cell_size;
+    p_drop();
     dropCounter = 0;
   }
 
@@ -57,15 +138,16 @@ function update(time = 0) {
 document.addEventListener("keydown", event => {
   switch (event.keyCode) {
     case 37:
-      player.pos.x -= cell_size;
+      p_move(-cell_size);
       break;
     case 38:
+      p_rotate(player.matrix);
       break;
     case 39:
-      player.pos.x += cell_size;
+      p_move(cell_size);
       break;
     case 40:
-      player.pos.y += cell_size;
+      p_drop();
     default:
       break;
   }

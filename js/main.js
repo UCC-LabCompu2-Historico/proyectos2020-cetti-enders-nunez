@@ -55,7 +55,7 @@ tutorial_btn.onclick = () => {
 }
 
 music_btn.onclick = () => {
-  if(music_player.muted == true) {
+  if(music_player.muted === true) {
     music_player.muted = false;
     music_img.src = "/assets/no_mute.png"
   }
