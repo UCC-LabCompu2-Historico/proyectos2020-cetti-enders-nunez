@@ -3,10 +3,12 @@ import play from "./game.js";
 let game = document.getElementById("game");
 let menu = document.getElementById("menu");
 let tutorial = document.getElementById("tutorial");
+let user_input = document.getElementById("user_input");
 
 let back_game_btn = document.getElementById("back_game_btn");
 let back_tuto_btn = document.getElementById("back_tuto_btn");
 let game_btn = document.getElementById("game_btn");
+let start_game_btn = document.getElementById("start_game_btn");
 let tutorial_btn = document.getElementById("tutorial_btn");
 let music_img = document.getElementById("music_img");
 let music_player = document.getElementById("music_player");
@@ -42,9 +44,11 @@ game_btn.onclick = () => {
   change_display(back_game_btn, "block");
   change_display(game, "flex");
   change_display(menu, "none");
+}
 
+start_game_btn.onclick = () => {
+  change_display(user_input, "none");
   setTimeout(() => { play() }, 700);
-
   play_music("tetris_theme.mp3")
 }
 

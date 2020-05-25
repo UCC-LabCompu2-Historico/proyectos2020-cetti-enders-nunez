@@ -92,8 +92,8 @@ function p_drop(){
     merge(board, player);
     player.pos.x=70;
     player.pos.y=45;
-}
-dropCounter = 0;
+  }
+  dropCounter = 0;
 }
 
 function p_rotate() {
@@ -118,6 +118,10 @@ function render() {
   context.fillRect(10, 45, 300, 630);
   draw_matrix(board, {x: 10, y:45});
   draw_matrix(player.matrix, player.pos);
+
+  let username = document.getElementById("username").value;
+  context.font = "30px serif";
+  context.fillText(username, 0, 20);
 }
 
 function update(time = 0) {
