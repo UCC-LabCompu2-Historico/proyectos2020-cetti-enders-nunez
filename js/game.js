@@ -15,9 +15,11 @@ const pieces = "TOLJISZ";
 const player = {
   matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
   pos: { x: 70, y: 45 },
+  score:0
 };
 
 function line_clear() {
+  let rowCount = 1;
   outer: for (let y = board.length -1; y > 0; --y) {
       for (let x = 0; x < board[y].length; ++x) {
           if (board[y][x] === 0) {
@@ -28,6 +30,9 @@ function line_clear() {
       const row = board.splice(y, 1)[0].fill(0);
       board.unshift(row);
       ++y;
+
+      player.score += rowCount * 10;
+      rowCount *= 2;
   }
 }
 
@@ -160,6 +165,8 @@ function render() {
   let username = document.getElementById("username").value;
   context.font = "30px serif";
   context.fillText(username, 0, 20);
+
+  context.fillText(player.score, canvas.width-100, 50);
 }
 
 function update(time = 0) {
