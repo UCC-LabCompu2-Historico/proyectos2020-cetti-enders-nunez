@@ -2,7 +2,6 @@
   display: none;
   flex-direction: column;
   align-items: center;
-  height: 100%;
 }
 
 #game_container {
@@ -10,10 +9,4 @@
   align-items: center;
   flex-direction: column;
   height: 700px;
-}
-
-.game_canvas {
-  background-color: black;
-  width: 100%;
-  height: 100%;
 }

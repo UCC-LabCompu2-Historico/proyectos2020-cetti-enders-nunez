@@ -10,12 +10,14 @@
 </head>
 
 <body>
-  <audio id="music_player" autoplay>
-    <source src="assets/halo_theme.mp3">
-  </audio>
+  <header>
+    <audio loop id="music_player"></audio>
+  </header>
 
-  <div id="music" >
-    <button id="music_btn" class="music_btn"><img id="music_img" class="music_img" src="/assets/no_mute.png"></button>
+  <div id="music">
+    <button id="music_btn" class="music_btn">
+      <img id="music_img" class="music_img" src="/assets/no_mute.png">
+    </button>
   </div>
   
   <div id="menu">
@@ -31,8 +33,12 @@
       <button id="back_game_btn" class="button back_btn">Atras</button>
       <h1 class="subtitle">Juego</h1>
     </div>
+    <div id="user_input">
+      <input id="username" type="text">
+      <button id="start_game_btn">Empezar</button>
+    </div>
     <div id="game_container" class="col-7">
-      <canvas class="game_canvas"></canvas>
+      <canvas id="board" width="500" height="700"></canvas>
     </div>
   </div>
 
@@ -58,7 +64,12 @@
         <p>Dejar caer inmediatamente la pieza</p>
     </div>
   </div>
-  <script src="js/main.js"></script>
+
+  <footer>
+    <p>UCC - Laboratorio de Computación II</p>
+  </footer>
+
+  <script src="js/main.js" type="module"></script>
 </body>
 
 </html>

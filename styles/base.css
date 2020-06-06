@@ -27,6 +27,14 @@ body {
   color: white;
 }
 
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
 p {
   text-align: center;
 }
@@ -86,12 +94,12 @@ p {
   text-align: right;
 }
 
-.music_btn{
+.music_btn {
   background-color: transparent;
   width: 20px;
   border: none;
 }
 
-.music_img{
+.music_img {
   height: 20px;
 }
