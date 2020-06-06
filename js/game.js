@@ -108,10 +108,15 @@ function p_drop(){
   if (collide(board, player)) {
     player.pos.y-=cell_size;
     merge(board, player);
-    player.pos.x=70;
-    player.pos.y=45;
+    p_reset();
   }
   dropCounter = 0;
+}
+
+function p_reset(){
+  player.matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
+  player.pos.x = 70;
+  player.pos.y = 45;
 }
 
 function p_rotate() {
