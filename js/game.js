@@ -17,24 +17,23 @@ const player = {
   pos: { x: 70, y: 45 },
 };
 
-function line_clear(){
-  let rowCount = 1;
-    outer: for (let y = board.length -1; y > 0; --y) {
-        for (let x = 0; x < board[y].length; ++x) {
-            if (board[y][x] === 0) {
-                continue outer;
-            }
-        }
+function line_clear() {
+  outer: for (let y = board.length -1; y > 0; --y) {
+      for (let x = 0; x < board[y].length; ++x) {
+          if (board[y][x] === 0) {
+              continue outer;
+          }
+      }
 
-        const row = board.splice(y, 1)[0].fill(0);
-        board.unshift(row);
-        ++y;
-    }
+      const row = board.splice(y, 1)[0].fill(0);
+      board.unshift(row);
+      ++y;
+  }
 }
 
-function create_matrix(w, h){
+function create_matrix(w, h) {
   const matrix = []
-  while(h !== 0){
+  while(h !== 0) {
     matrix.push(new Array(w).fill(0));
     h--;
   }
