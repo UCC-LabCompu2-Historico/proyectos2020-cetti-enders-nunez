@@ -1,3 +1,5 @@
+import {T, O, L, J, I, S, Z} from "./pieces.js";
+
 const canvas = document.getElementById("board");
 const context = canvas.getContext("2d");
 const cell_size = 30;
@@ -7,14 +9,11 @@ let dropInterval = 1000;
 let lastTime = 0;
 
 const board = create_matrix(10, 21);
-const matrix = [
-  [0, 1, 0],
-  [1, 1, 1],
-  [0, 0, 0],
-];
+
+const pieces = "TOLJISZ";
 
 const player = {
-  matrix: matrix,
+  matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
   pos: { x: 70, y: 45 }
 };
 
@@ -25,6 +24,25 @@ function create_matrix(w, h){
     h--;
   }
   return matrix;
+}
+
+function create_piece(piece){
+  switch (piece) {
+    case 'T':
+      return T;
+    case 'O':
+      return O;
+    case 'L':
+      return L;
+    case 'J':
+      return J;
+    case 'I':
+      return I;
+    case 'S':
+      return S;
+    case 'Z':
+      return Z;
+  }
 }
 
 function collide(board, player){
