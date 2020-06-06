@@ -81,9 +81,8 @@ function merge(board, player){
 }
 
 function rotate(matrix, dir){
-  console.log("hola");
-  for (let y = 0; y<matrix.length;y++){
-    for(let x = 0; x<y; x++){
+  for (let y = 0; y < matrix.length; y++) {
+    for(let x = 0; x < y; x++) {
       let temp = matrix[x][y];
       matrix[x][y] = matrix [y][x];
       matrix[y][x] = temp;
@@ -113,7 +112,7 @@ function p_drop(){
   dropCounter = 0;
 }
 
-function p_reset(){
+function p_reset() {
   player.matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
   player.pos.x = 70;
   player.pos.y = 45;
@@ -124,12 +123,13 @@ function p_rotate() {
   let offset = cell_size;
   rotate(player.matrix, 1);
   while (collide(board, player)) {
-      if((player.pos.x-10)/cell_size < 0){
-        player.pos.x += cell_size;
-      }
-      else{
-        player.pos.x -= cell_size;
-      }
+    player.pos.x += offset;
+    offset = -(offset + (offset > 0 ? 30 : -30));
+    if (offset / cell_size > player.matrix[0].length) {
+      rotate(player.matrix, -1);
+      player.pos.x = pos;
+      return;
+    }
   }
 }
 
