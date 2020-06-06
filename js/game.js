@@ -14,8 +14,23 @@ const pieces = "TOLJISZ";
 
 const player = {
   matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
-  pos: { x: 70, y: 45 }
+  pos: { x: 70, y: 45 },
 };
+
+function line_clear(){
+  let rowCount = 1;
+    outer: for (let y = board.length -1; y > 0; --y) {
+        for (let x = 0; x < board[y].length; ++x) {
+            if (board[y][x] === 0) {
+                continue outer;
+            }
+        }
+
+        const row = board.splice(y, 1)[0].fill(0);
+        board.unshift(row);
+        ++y;
+    }
+}
 
 function create_matrix(w, h){
   const matrix = []
@@ -108,6 +123,7 @@ function p_drop(){
     player.pos.y-=cell_size;
     merge(board, player);
     p_reset();
+    line_clear()
   }
   dropCounter = 0;
 }
