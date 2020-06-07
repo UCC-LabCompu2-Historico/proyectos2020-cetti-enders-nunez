@@ -1,4 +1,4 @@
-import {T, O, L, J, I, S, Z} from "./pieces.js";
+import { T, O, L, J, I, S, Z } from "./pieces.js";
 
 const canvas = document.getElementById("board");
 const context = canvas.getContext("2d");
@@ -15,37 +15,37 @@ const pieces = "TOLJISZ";
 const player = {
   matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
   pos: { x: 70, y: 45 },
-  score:0
+  score: 0
 };
 
 function line_clear() {
   let rowCount = 1;
-  outer: for (let y = board.length -1; y > 0; --y) {
-      for (let x = 0; x < board[y].length; ++x) {
-          if (board[y][x] === 0) {
-              continue outer;
-          }
+  outer: for (let y = board.length - 1; y > 0; --y) {
+    for (let x = 0; x < board[y].length; ++x) {
+      if (board[y][x] === 0) {
+        continue outer;
       }
+    }
 
-      const row = board.splice(y, 1)[0].fill(0);
-      board.unshift(row);
-      ++y;
+    const row = board.splice(y, 1)[0].fill(0);
+    board.unshift(row);
+    ++y;
 
-      player.score += rowCount * 10;
-      rowCount *= 2;
+    player.score += rowCount * 10;
+    rowCount *= 2;
   }
 }
 
 function create_matrix(w, h) {
   const matrix = []
-  while(h !== 0) {
+  while (h !== 0) {
     matrix.push(new Array(w).fill(0));
     h--;
   }
   return matrix;
 }
 
-function create_piece(piece){
+function create_piece(piece) {
   switch (piece) {
     case 'T':
       return T;
@@ -64,13 +64,13 @@ function create_piece(piece){
   }
 }
 
-function collide(board, player){
+function collide(board, player) {
   const matrix = player.matrix;
-  const offset_x = (player.pos.x-10)/cell_size;
-  const offset_y = (player.pos.y-45)/cell_size;
-  for (let y = 0; y < matrix.length; y++){
-    for(let x = 0; x < matrix[y].length; x++){
-      if(matrix[y][x] !== 0 && (board [y+offset_y] && board [y+offset_y][x+offset_x]) !== 0){
+  const offset_x = (player.pos.x - 10) / cell_size;
+  const offset_y = (player.pos.y - 45) / cell_size;
+  for (let y = 0; y < matrix.length; y++) {
+    for (let x = 0; x < matrix[y].length; x++) {
+      if (matrix[y][x] !== 0 && (board[y + offset_y] && board[y + offset_y][x + offset_x]) !== 0) {
         return true;
       }
     }
@@ -89,21 +89,29 @@ function draw_matrix(matrix, pos) {
   });
 }
 
-function merge(board, player){
+function game_over() {
+  for (let y = 0; y < board.length; y++) {
+    board[y].fill(0);
+  }
+
+  player.score = 0;
+}
+
+function merge(board, player) {
   player.matrix.forEach((row, y) => {
     row.forEach((value, x) => {
-      if(value !==0){
-        board[y+(player.pos.y-45)/cell_size][x+(player.pos.x-10)/cell_size] = value;
+      if (value !== 0) {
+        board[y + (player.pos.y - 45) / cell_size][x + (player.pos.x - 10) / cell_size] = value;
       }
     });
   });
 }
 
-function rotate(matrix, dir){
+function rotate(matrix, dir) {
   for (let y = 0; y < matrix.length; y++) {
-    for(let x = 0; x < y; x++) {
+    for (let x = 0; x < y; x++) {
       let temp = matrix[x][y];
-      matrix[x][y] = matrix [y][x];
+      matrix[x][y] = matrix[y][x];
       matrix[y][x] = temp;
     }
   }
@@ -117,17 +125,22 @@ function rotate(matrix, dir){
 function p_move(offset) {
   player.pos.x += offset;
   if (collide(board, player)) {
-      player.pos.x -= offset;
+    player.pos.x -= offset;
   }
 }
 
-function p_drop(){
-  player.pos.y+= cell_size;
+function p_drop() {
+  player.pos.y += cell_size;
   if (collide(board, player)) {
-    player.pos.y-=cell_size;
-    merge(board, player);
-    p_reset();
-    line_clear()
+    if (player.pos.y === 75) {
+      game_over();
+    }
+    else {
+      player.pos.y -= cell_size;
+      merge(board, player);
+      p_reset();
+      line_clear();
+    }
   }
   dropCounter = 0;
 }
@@ -159,14 +172,14 @@ function render() {
 
   context.fillStyle = "black";
   context.fillRect(10, 45, 300, 630);
-  draw_matrix(board, {x: 10, y:45});
+  draw_matrix(board, { x: 10, y: 45 });
   draw_matrix(player.matrix, player.pos);
 
   let username = document.getElementById("username").value;
   context.font = "30px serif";
   context.fillText(username, 0, 20);
 
-  context.fillText(player.score, canvas.width-100, 50);
+  context.fillText(player.score, canvas.width - 100, 50);
 }
 
 function update(time = 0) {
