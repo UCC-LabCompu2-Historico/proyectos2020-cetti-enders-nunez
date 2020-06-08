@@ -13,7 +13,8 @@ const board = create_matrix(10, 21);
 const pieces = "TOLJISZ";
 
 const player = {
-  matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
+  matrix: create_piece("T"), //create_piece(pieces[pieces.length * Math.random() | 0]),
+  next_matrix: create_piece("T"), //create_piece(pieces[pieces.length * Math.random() | 0]),
   pos: { x: 70, y: 45 },
   score: 0
 };
@@ -50,7 +51,7 @@ function create_matrix(w, h) {
 function create_piece(piece) {
   switch (piece) {
     case 'T':
-      return T;
+      return Array.from(T);
     case 'O':
       return O;
     case 'L':
@@ -122,17 +123,18 @@ function merge(board, player) {
 }
 
 function rotate(matrix, dir) {
-  for (let y = 0; y < matrix.length; y++) {
+  let a = Array.from(matrix);
+  for (let y = 0; y < a.length; y++) {
     for (let x = 0; x < y; x++) {
-      let temp = matrix[x][y];
-      matrix[x][y] = matrix[y][x];
-      matrix[y][x] = temp;
+      let temp = a[x][y];
+      a[x][y] = a[y][x];
+      a[y][x] = temp;
     }
   }
   if (dir > 0) {
-    matrix.forEach(row => row.reverse());
+    a.forEach(row => row.reverse());
   } else {
-    matrix.reverse();
+    a.reverse();
   }
 }
 
@@ -160,7 +162,9 @@ function p_drop() {
 }
 
 function p_reset() {
-  player.matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
+  let a = Array.from(player.next_matrix);
+  player.matrix = a;
+  player.next_matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
   player.pos.x = 70;
   player.pos.y = 45;
 }
@@ -192,6 +196,8 @@ function render() {
   player.username = document.getElementById("username").value;
   context.font = "30px serif";
   context.fillText(player.username, 0, 20);
+
+  draw_matrix(player.next_matrix, {x: 360, y: 320});
 
   context.fillText("Top player", 320, 460);
   if (best_player !== null) {
