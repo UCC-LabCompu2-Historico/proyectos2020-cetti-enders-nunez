@@ -18,6 +18,8 @@ const player = {
   score: 0
 };
 
+let best_player = get_score();
+
 function line_clear() {
   let rowCount = 1;
   outer: for (let y = board.length - 1; y > 0; --y) {
@@ -90,11 +92,23 @@ function draw_matrix(matrix, pos) {
 }
 
 function game_over() {
+  set_top_player();
+
   for (let y = 0; y < board.length; y++) {
     board[y].fill(0);
   }
 
   player.score = 0;
+}
+
+function get_score() {
+  let player_json = localStorage.getItem("player");
+  try {
+    let p = JSON.parse(player_json);
+    return p;
+  } catch (error) {
+    return null;
+  };
 }
 
 function merge(board, player) {
@@ -175,11 +189,33 @@ function render() {
   draw_matrix(board, { x: 10, y: 45 });
   draw_matrix(player.matrix, player.pos);
 
-  let username = document.getElementById("username").value;
+  player.username = document.getElementById("username").value;
   context.font = "30px serif";
-  context.fillText(username, 0, 20);
+  context.fillText(player.username, 0, 20);
+
+  context.fillText("Top player", 320, 460);
+  if (best_player !== null) {
+    context.fillText(`${best_player.username} ${best_player.score}`, 320, 500);
+  }
 
   context.fillText(player.score, canvas.width - 100, 50);
+}
+
+function set_top_player() {
+  if (best_player !== null) {
+    if (player.score > best_player.score) {
+      store_score();
+      best_player = get_score();
+    }
+  } else {
+    store_score();
+    best_player = get_score();
+  }
+}
+
+function store_score() {
+  let player_json = JSON.stringify(player);
+  localStorage.setItem("player", player_json);
 }
 
 function update(time = 0) {
