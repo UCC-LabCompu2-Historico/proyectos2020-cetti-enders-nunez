@@ -12,9 +12,13 @@ const board = create_matrix(10, 21);
 
 const pieces = "TOLJISZ";
 
+let lineCounter = 0;
+let lineInterval = 10;
+let level = 1;
+
 const player = {
-  matrix: create_piece("T"), //create_piece(pieces[pieces.length * Math.random() | 0]),
-  next_matrix: create_piece("T"), //create_piece(pieces[pieces.length * Math.random() | 0]),
+  matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
+  next_matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
   pos: { x: 70, y: 45 },
   score: 0
 };
@@ -33,9 +37,14 @@ function line_clear() {
     const row = board.splice(y, 1)[0].fill(0);
     board.unshift(row);
     ++y;
-
-    player.score += rowCount * 10;
+    player.score += rowCount * 10 * level;
     rowCount *= 2;
+    lineCounter++;
+  }
+  if (lineCounter >= lineInterval) {
+    level++;
+    dropInterval -= level * 50;
+    lineInterval += 5;
   }
 }
 
@@ -100,6 +109,12 @@ function game_over() {
   }
 
   player.score = 0;
+  player.matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
+  player.next_matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
+  dropInterval = 1000;
+  lineInterval = 10;
+  lineCounter = 0;
+  level = 1;
 }
 
 function get_score() {
@@ -197,7 +212,10 @@ function render() {
   context.font = "30px serif";
   context.fillText(player.username, 0, 20);
 
-  draw_matrix(player.next_matrix, {x: 360, y: 320});
+  draw_matrix(player.next_matrix, { x: 360, y: 320 });
+
+  context.fillText(`Nivel: ${level}`, 320, 200);
+  context.fillText(`Lineas: ${lineCounter}`, 320, 150);
 
   context.fillText("Top player", 320, 460);
   if (best_player !== null) {
