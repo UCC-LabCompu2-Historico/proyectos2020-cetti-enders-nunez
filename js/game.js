@@ -15,6 +15,7 @@ const pieces = "TOLJISZ";
 let lineCounter = 0;
 let lineInterval = 10;
 let level = 1;
+let pause = false;
 
 const player = {
   matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
@@ -243,19 +244,26 @@ function store_score() {
 }
 
 function update(time = 0) {
-  const deltaTime = time - lastTime;
+  if (!pause) {
+    const deltaTime = time - lastTime;
 
-  dropCounter += deltaTime;
-  if (dropCounter > dropInterval) {
-    p_drop();
-    dropCounter = 0;
+    dropCounter += deltaTime;
+    if (dropCounter > dropInterval) {
+      p_drop();
+      dropCounter = 0;
+    }
+
+    lastTime = time;
+
+    render();
+  } else {
+    context.fillStyle = "white";
+    context.fillRect(260, 60, 8, 30);
+    context.fillRect(275, 60, 8, 30);
   }
-
-  lastTime = time;
-
-  render();
   requestAnimationFrame(update);
 }
+
 
 document.addEventListener("keydown", event => {
   switch (event.keyCode) {
@@ -270,6 +278,10 @@ document.addEventListener("keydown", event => {
       break;
     case 40:
       p_drop();
+      break;
+    case 80:
+      pause = !pause;
+      break;
     default:
       break;
   }
