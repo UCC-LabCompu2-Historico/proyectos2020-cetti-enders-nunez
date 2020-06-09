@@ -4,6 +4,13 @@ const canvas = document.getElementById("board");
 const context = canvas.getContext("2d");
 const cell_size = 30;
 
+const LEFT_ARROW_KEY = 37;
+const UP_ARROW_KEY = 38;
+const RIGHT_ARROW_KEY = 39;
+const DOWN_ARROW_KEY = 40;
+const P_KEY = 80;
+const R_KEY = 82;
+
 let dropCounter = 0;
 let dropInterval = 1000;
 let lastTime = 0;
@@ -12,8 +19,16 @@ const board = create_matrix(10, 21);
 
 const pieces = "TOLJISZ";
 
+let lineCounter = 0;
+let lineInterval = 10;
+let level = 1;
+const LAST_LEVEL = 18;
+
+let pause = false;
+
 const player = {
   matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
+  next_matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
   pos: { x: 70, y: 45 },
   score: 0
 };
@@ -32,9 +47,19 @@ function line_clear() {
     const row = board.splice(y, 1)[0].fill(0);
     board.unshift(row);
     ++y;
-
-    player.score += rowCount * 10;
+    player.score += rowCount * 10 * level;
     rowCount *= 2;
+    lineCounter++;
+  }
+
+  if (level < LAST_LEVEL) {
+    if (lineCounter >= lineInterval) {
+      if (level < 3) {
+        level_up(10);
+      } else {
+        level_up(5);
+      }
+    }
   }
 }
 
@@ -50,7 +75,7 @@ function create_matrix(w, h) {
 function create_piece(piece) {
   switch (piece) {
     case 'T':
-      return T;
+      return Array.from(T);
     case 'O':
       return O;
     case 'L':
@@ -93,12 +118,7 @@ function draw_matrix(matrix, pos) {
 
 function game_over() {
   set_top_player();
-
-  for (let y = 0; y < board.length; y++) {
-    board[y].fill(0);
-  }
-
-  player.score = 0;
+  restart();
 }
 
 function get_score() {
@@ -111,6 +131,12 @@ function get_score() {
   };
 }
 
+function level_up(interval) {
+  level++;
+  dropInterval -= level * 5;
+  lineInterval += interval;
+}
+
 function merge(board, player) {
   player.matrix.forEach((row, y) => {
     row.forEach((value, x) => {
@@ -121,18 +147,32 @@ function merge(board, player) {
   });
 }
 
+function restart(){
+  for (let y = 0; y < board.length; y++) {
+    board[y].fill(0);
+  }
+
+  p_reset();
+  player.score = 0;
+  dropInterval = 1000;
+  lineInterval = 10;
+  lineCounter = 0;
+  level = 1;
+}
+
 function rotate(matrix, dir) {
-  for (let y = 0; y < matrix.length; y++) {
+  let a = Array.from(matrix);
+  for (let y = 0; y < a.length; y++) {
     for (let x = 0; x < y; x++) {
-      let temp = matrix[x][y];
-      matrix[x][y] = matrix[y][x];
-      matrix[y][x] = temp;
+      let temp = a[x][y];
+      a[x][y] = a[y][x];
+      a[y][x] = temp;
     }
   }
   if (dir > 0) {
-    matrix.forEach(row => row.reverse());
+    a.forEach(row => row.reverse());
   } else {
-    matrix.reverse();
+    a.reverse();
   }
 }
 
@@ -160,7 +200,9 @@ function p_drop() {
 }
 
 function p_reset() {
-  player.matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
+  let a = Array.from(player.next_matrix);
+  player.matrix = a;
+  player.next_matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
   player.pos.x = 70;
   player.pos.y = 45;
 }
@@ -193,6 +235,11 @@ function render() {
   context.font = "30px serif";
   context.fillText(player.username, 0, 20);
 
+  draw_matrix(player.next_matrix, { x: 360, y: 320 });
+
+  context.fillText(`Nivel: ${level}`, 320, 200);
+  context.fillText(`Lineas: ${lineCounter}`, 320, 150);
+
   context.fillText("Top player", 320, 460);
   if (best_player !== null) {
     context.fillText(`${best_player.username} ${best_player.score}`, 320, 500);
@@ -219,33 +266,46 @@ function store_score() {
 }
 
 function update(time = 0) {
-  const deltaTime = time - lastTime;
+  if (!pause) {
+    const deltaTime = time - lastTime;
 
-  dropCounter += deltaTime;
-  if (dropCounter > dropInterval) {
-    p_drop();
-    dropCounter = 0;
+    dropCounter += deltaTime;
+    if (dropCounter > dropInterval) {
+      p_drop();
+      dropCounter = 0;
+    }
+
+    lastTime = time;
+
+    render();
+  } else {
+    context.fillStyle = "white";
+    context.fillRect(260, 60, 8, 30);
+    context.fillRect(275, 60, 8, 30);
   }
-
-  lastTime = time;
-
-  render();
   requestAnimationFrame(update);
 }
 
 document.addEventListener("keydown", event => {
   switch (event.keyCode) {
-    case 37:
+    case LEFT_ARROW_KEY:
       p_move(-cell_size);
       break;
-    case 38:
+    case UP_ARROW_KEY:
       p_rotate(player.matrix);
       break;
-    case 39:
+    case RIGHT_ARROW_KEY:
       p_move(cell_size);
       break;
-    case 40:
+    case DOWN_ARROW_KEY:
       p_drop();
+      break;
+    case P_KEY:
+      pause = !pause;
+      break;
+    case R_KEY:
+      restart();
+      break;
     default:
       break;
   }
