@@ -42,10 +42,21 @@ function line_clear() {
     rowCount *= 2;
     lineCounter++;
   }
-  if (lineCounter >= lineInterval) {
-    level++;
-    dropInterval -= level * 50;
-    lineInterval += 5;
+  if(level <18){
+    if(level <3){
+      if (lineCounter >= lineInterval) {
+        level++;
+        dropInterval -= level * 5;
+        lineInterval += 10;
+      }
+      else{
+        if (lineCounter >= lineInterval) {
+          level++;
+          dropInterval -= level * 5;
+          lineInterval += 5;
+        }
+      }
+    }
   }
 }
 
@@ -104,18 +115,7 @@ function draw_matrix(matrix, pos) {
 
 function game_over() {
   set_top_player();
-
-  for (let y = 0; y < board.length; y++) {
-    board[y].fill(0);
-  }
-
-  player.score = 0;
-  player.matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
-  player.next_matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
-  dropInterval = 1000;
-  lineInterval = 10;
-  lineCounter = 0;
-  level = 1;
+  restart();
 }
 
 function get_score() {
@@ -136,6 +136,19 @@ function merge(board, player) {
       }
     });
   });
+}
+
+function restart(){
+  for (let y = 0; y < board.length; y++) {
+    board[y].fill(0);
+  }
+
+  p_reset();
+  player.score = 0;
+  dropInterval = 1000;
+  lineInterval = 10;
+  lineCounter = 0;
+  level = 1;
 }
 
 function rotate(matrix, dir) {
@@ -281,6 +294,9 @@ document.addEventListener("keydown", event => {
       break;
     case 80:
       pause = !pause;
+      break;
+    case 82:
+      restart();
       break;
     default:
       break;
