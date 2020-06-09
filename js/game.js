@@ -4,6 +4,13 @@ const canvas = document.getElementById("board");
 const context = canvas.getContext("2d");
 const cell_size = 30;
 
+const LEFT_ARROW_KEY = 37;
+const UP_ARROW_KEY = 38;
+const RIGHT_ARROW_KEY = 39;
+const DOWN_ARROW_KEY = 40;
+const P_KEY = 80;
+const R_KEY = 82;
+
 let dropCounter = 0;
 let dropInterval = 1000;
 let lastTime = 0;
@@ -15,6 +22,8 @@ const pieces = "TOLJISZ";
 let lineCounter = 0;
 let lineInterval = 10;
 let level = 1;
+const LAST_LEVEL = 18;
+
 let pause = false;
 
 const player = {
@@ -42,19 +51,13 @@ function line_clear() {
     rowCount *= 2;
     lineCounter++;
   }
-  if(level <18){
-    if(level <3){
-      if (lineCounter >= lineInterval) {
-        level++;
-        dropInterval -= level * 5;
-        lineInterval += 10;
-      }
-      else{
-        if (lineCounter >= lineInterval) {
-          level++;
-          dropInterval -= level * 5;
-          lineInterval += 5;
-        }
+
+  if (level < LAST_LEVEL) {
+    if (lineCounter >= lineInterval) {
+      if (level < 3) {
+        level_up(10);
+      } else {
+        level_up(5);
       }
     }
   }
@@ -126,6 +129,12 @@ function get_score() {
   } catch (error) {
     return null;
   };
+}
+
+function level_up(interval) {
+  level++;
+  dropInterval -= level * 5;
+  lineInterval += interval;
 }
 
 function merge(board, player) {
@@ -277,25 +286,24 @@ function update(time = 0) {
   requestAnimationFrame(update);
 }
 
-
 document.addEventListener("keydown", event => {
   switch (event.keyCode) {
-    case 37:
+    case LEFT_ARROW_KEY:
       p_move(-cell_size);
       break;
-    case 38:
+    case UP_ARROW_KEY:
       p_rotate(player.matrix);
       break;
-    case 39:
+    case RIGHT_ARROW_KEY:
       p_move(cell_size);
       break;
-    case 40:
+    case DOWN_ARROW_KEY:
       p_drop();
       break;
-    case 80:
+    case P_KEY:
       pause = !pause;
       break;
-    case 82:
+    case R_KEY:
       restart();
       break;
     default:
