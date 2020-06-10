@@ -23,6 +23,7 @@ let level = 1;
 const LAST_LEVEL = 18;
 
 let pause = false;
+let gameOver = false;
 
 let player = new Player();
 let best_player = Player.best;
@@ -96,7 +97,8 @@ function game_over() {
   let username = document.getElementById("username").value;
   player.store(username, best_player);
   best_player = Player.best;
-  restart();
+
+  gameOver = !gameOver;
 }
 
 function level_up(interval) {
@@ -126,6 +128,7 @@ function restart(){
   lineInterval = 10;
   lineCounter = 0;
   level = 1;
+  gameOver = false;
 }
 
 function p_move(offset) {
@@ -185,7 +188,7 @@ function render() {
 }
 
 function update(time = 0) {
-  if (!pause) {
+  if (!pause && !gameOver) {
     const deltaTime = time - lastTime;
 
     dropCounter += deltaTime;
@@ -197,10 +200,17 @@ function update(time = 0) {
     lastTime = time;
 
     render();
-  } else {
+  } else if (pause && !gameOver){
     context.fillStyle = "white";
     context.fillRect(260, 60, 8, 30);
     context.fillRect(275, 60, 8, 30);
+  }else{
+    context.font = "25px serif";
+    context.fillStyle = "white";
+    context.fillText(`Game Over`, 95, 200);
+    context.fillText(`Puntaje: ${player.score}`, 95, 235);
+    context.font = "20px serif";
+    context.fillText(`Preciona R para reiniciar`, 65, 265);
   }
   requestAnimationFrame(update);
 }
@@ -217,7 +227,9 @@ document.addEventListener("keydown", event => {
       p_move(cell_size);
       break;
     case DOWN_ARROW_KEY:
-      p_drop();
+      if(!gameOver){
+        p_drop();
+      }
       break;
     case P_KEY:
       pause = !pause;
