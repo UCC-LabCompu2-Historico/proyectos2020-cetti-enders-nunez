@@ -40,18 +40,7 @@ export default class Player {
   }
 
   rotate(dir) {
-    for (let y = 0; y < this.piece.piece.length; y++) {
-      for (let x = 0; x < y; x++) {
-        let temp = this.piece.piece[x][y];
-        this.piece.piece[x][y] = this.piece.piece[y][x];
-        this.piece.piece[y][x] = temp;
-      }
-    }
-    if (dir > 0) {
-      this.piece.piece.forEach(row => row.reverse());
-    } else {
-      this.piece.piece.reverse();
-    }
+    this.piece.rotate(dir);
   }
 
   store(username, best) {

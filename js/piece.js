@@ -37,4 +37,19 @@ export default class Piece {
       });
     });
   }
+
+  rotate(dir) {
+    for (let y = 0; y < this.piece.length; y++) {
+      for (let x = 0; x < y; x++) {
+        let temp = this.piece[x][y];
+        this.piece[x][y] = this.piece[y][x];
+        this.piece[y][x] = temp;
+      }
+    }
+    if (dir > 0) {
+      this.piece.forEach(row => row.reverse());
+    } else {
+      this.piece.reverse();
+    }
+  }
 }
