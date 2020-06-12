@@ -6,8 +6,16 @@ Proyecto final de la materia Laboratorio de Computación II de la Universidad Ca
 
 Decidimos desarrollar el juego [Tetris](https://en.wikipedia.org/wiki/Tetris). Nos pareció una buena idea debido a que aprovecha las características de dibujo de gráficos del [Canvas](http://developer.mozilla.org/en-US/docs/Web/API/Canvas_API).
 
+Sitio web: [https://ucc-labcompu2.github.io/proyectos2020-cetti-enders-nunez/]()
+
 ## Integrantes
 
 * Cetti, Mateo Pablo (2011861)
 * Enders, Guillermo (2012036)
 * Nuñez, Ivan Luis (2011640)
+
+## Tecnologías
+
+* HTML
+* CSS
+* JavaScript
