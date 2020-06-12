@@ -1,4 +1,4 @@
-import { T, O, L, J, I, S, Z } from "./pieces.js";
+import Player from "./player.js";
 
 const canvas = document.getElementById("board");
 const context = canvas.getContext("2d");
@@ -17,23 +17,16 @@ let lastTime = 0;
 
 const board = create_matrix(10, 21);
 
-const pieces = "TOLJISZ";
-
 let lineCounter = 0;
 let lineInterval = 10;
 let level = 1;
 const LAST_LEVEL = 18;
 
 let pause = false;
+let gameOver = false;
 
-const player = {
-  matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
-  next_matrix: create_piece(pieces[pieces.length * Math.random() | 0]),
-  pos: { x: 70, y: 45 },
-  score: 0
-};
-
-let best_player = get_score();
+let player = new Player();
+let best_player = Player.best;
 
 function line_clear() {
   let rowCount = 1;
@@ -72,29 +65,10 @@ function create_matrix(w, h) {
   return matrix;
 }
 
-function create_piece(piece) {
-  switch (piece) {
-    case 'T':
-      return Array.from(T);
-    case 'O':
-      return O;
-    case 'L':
-      return L;
-    case 'J':
-      return J;
-    case 'I':
-      return I;
-    case 'S':
-      return S;
-    case 'Z':
-      return Z;
-  }
-}
-
-function collide(board, player) {
-  const matrix = player.matrix;
-  const offset_x = (player.pos.x - 10) / cell_size;
-  const offset_y = (player.pos.y - 45) / cell_size;
+function collide() {
+  const matrix = player.piece.piece;
+  const offset_x = (player.x - 10) / cell_size;
+  const offset_y = (player.y - 45) / cell_size;
   for (let y = 0; y < matrix.length; y++) {
     for (let x = 0; x < matrix[y].length; x++) {
       if (matrix[y][x] !== 0 && (board[y + offset_y] && board[y + offset_y][x + offset_x]) !== 0) {
@@ -105,8 +79,11 @@ function collide(board, player) {
   return false;
 }
 
-function draw_matrix(matrix, pos) {
-  matrix.forEach((row, y) => {
+function draw_board(pos) {
+  context.fillStyle = "black";
+  context.fillRect(pos.x, pos.y, board[0].length * cell_size, board.length * cell_size);
+
+  board.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
         context.fillStyle = "red";
@@ -117,18 +94,11 @@ function draw_matrix(matrix, pos) {
 }
 
 function game_over() {
-  set_top_player();
-  restart();
-}
+  let username = document.getElementById("username").value;
+  player.store(username, best_player);
+  best_player = Player.best;
 
-function get_score() {
-  let player_json = localStorage.getItem("player");
-  try {
-    let p = JSON.parse(player_json);
-    return p;
-  } catch (error) {
-    return null;
-  };
+  gameOver = !gameOver;
 }
 
 function level_up(interval) {
@@ -137,11 +107,11 @@ function level_up(interval) {
   lineInterval += interval;
 }
 
-function merge(board, player) {
-  player.matrix.forEach((row, y) => {
+function merge() {
+  player.piece.piece.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        board[y + (player.pos.y - 45) / cell_size][x + (player.pos.x - 10) / cell_size] = value;
+        board[y + (player.y - 45) / cell_size][x + (player.x - 10) / cell_size] = value;
       }
     });
   });
@@ -152,71 +122,48 @@ function restart(){
     board[y].fill(0);
   }
 
-  p_reset();
+  player.reset();
   player.score = 0;
   dropInterval = 1000;
   lineInterval = 10;
   lineCounter = 0;
   level = 1;
-}
-
-function rotate(matrix, dir) {
-  let a = Array.from(matrix);
-  for (let y = 0; y < a.length; y++) {
-    for (let x = 0; x < y; x++) {
-      let temp = a[x][y];
-      a[x][y] = a[y][x];
-      a[y][x] = temp;
-    }
-  }
-  if (dir > 0) {
-    a.forEach(row => row.reverse());
-  } else {
-    a.reverse();
-  }
+  gameOver = false;
 }
 
 function p_move(offset) {
-  player.pos.x += offset;
-  if (collide(board, player)) {
-    player.pos.x -= offset;
+  player.move(offset);
+  if (collide()) {
+    player.x -= offset;
   }
 }
 
 function p_drop() {
-  player.pos.y += cell_size;
-  if (collide(board, player)) {
-    if (player.pos.y === 75) {
+  player.drop();
+  if (collide()) {
+    if (player.y === 75) {
       game_over();
     }
     else {
-      player.pos.y -= cell_size;
+      player.y -= cell_size;
       merge(board, player);
-      p_reset();
+      player.reset();
       line_clear();
     }
   }
   dropCounter = 0;
 }
 
-function p_reset() {
-  let a = Array.from(player.next_matrix);
-  player.matrix = a;
-  player.next_matrix = create_piece(pieces[pieces.length * Math.random() | 0]);
-  player.pos.x = 70;
-  player.pos.y = 45;
-}
-
 function p_rotate() {
-  const pos = player.pos.x;
+  const pos = player.x;
   let offset = cell_size;
-  rotate(player.matrix, 1);
-  while (collide(board, player)) {
-    player.pos.x += offset;
+  player.rotate(1);
+  while (collide()) {
+    player.x += offset;
     offset = -(offset + (offset > 0 ? 30 : -30));
-    if (offset / cell_size > player.matrix[0].length) {
-      rotate(player.matrix, -1);
-      player.pos.x = pos;
+    if (offset / cell_size > player.piece.piece[0].length) {
+      player.rotate(-1);
+      player.x = pos;
       return;
     }
   }
@@ -226,47 +173,22 @@ function render() {
   context.fillStyle = "green";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
-  context.fillStyle = "black";
-  context.fillRect(10, 45, 300, 630);
-  draw_matrix(board, { x: 10, y: 45 });
-  draw_matrix(player.matrix, player.pos);
+  draw_board({ x: 10, y: 45 });
+  player.draw(context);
 
-  player.username = document.getElementById("username").value;
   context.font = "30px serif";
-  context.fillText(player.username, 0, 20);
-
-  draw_matrix(player.next_matrix, { x: 360, y: 320 });
-
+  context.fillText(document.getElementById("username").value, 0, 20);
+  context.fillText(player.score, canvas.width - 100, 50);
   context.fillText(`Nivel: ${level}`, 320, 200);
   context.fillText(`Lineas: ${lineCounter}`, 320, 150);
-
   context.fillText("Top player", 320, 460);
   if (best_player !== null) {
     context.fillText(`${best_player.username} ${best_player.score}`, 320, 500);
   }
-
-  context.fillText(player.score, canvas.width - 100, 50);
-}
-
-function set_top_player() {
-  if (best_player !== null) {
-    if (player.score > best_player.score) {
-      store_score();
-      best_player = get_score();
-    }
-  } else {
-    store_score();
-    best_player = get_score();
-  }
-}
-
-function store_score() {
-  let player_json = JSON.stringify(player);
-  localStorage.setItem("player", player_json);
 }
 
 function update(time = 0) {
-  if (!pause) {
+  if (!pause && !gameOver) {
     const deltaTime = time - lastTime;
 
     dropCounter += deltaTime;
@@ -278,10 +200,17 @@ function update(time = 0) {
     lastTime = time;
 
     render();
-  } else {
+  } else if (pause && !gameOver){
     context.fillStyle = "white";
     context.fillRect(260, 60, 8, 30);
     context.fillRect(275, 60, 8, 30);
+  }else{
+    context.font = "25px serif";
+    context.fillStyle = "white";
+    context.fillText(`Game Over`, 95, 200);
+    context.fillText(`Puntaje: ${player.score}`, 95, 235);
+    context.font = "20px serif";
+    context.fillText(`Preciona R para reiniciar`, 65, 265);
   }
   requestAnimationFrame(update);
 }
@@ -292,13 +221,15 @@ document.addEventListener("keydown", event => {
       p_move(-cell_size);
       break;
     case UP_ARROW_KEY:
-      p_rotate(player.matrix);
+      p_rotate();
       break;
     case RIGHT_ARROW_KEY:
       p_move(cell_size);
       break;
     case DOWN_ARROW_KEY:
-      p_drop();
+      if(!gameOver){
+        p_drop();
+      }
       break;
     case P_KEY:
       pause = !pause;
