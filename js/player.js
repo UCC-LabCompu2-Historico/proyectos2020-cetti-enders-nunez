@@ -19,7 +19,7 @@ class Player {
   }
 
   /**
-   * local del navegador.
+   * Devuelve el jugador con mayor puntaje guardado en el almacenamiento local del navegador.
    * @return p {?Object} - Jugador con mayor puntaje.
    */
   static best() {

@@ -28,6 +28,10 @@ let gameOver = false;
 let player = new Player(100, 45);
 let best_player = Player.best();
 
+/**
+ * Borra las lineas del tablero de juego que esten llenas
+ * y asigna los debidos puntos al jugador.
+ */
 function line_clear() {
   let rowCount = 1;
   outer: for (let y = board.length - 1; y > 0; --y) {
@@ -56,6 +60,12 @@ function line_clear() {
   }
 }
 
+/**
+ * Crea el tablero de juego.
+ * @param {number} w - Ancho del tablero
+ * @param {number} h - Alto del tablero
+ * @returns {Array<Array<number>>} matrix - Tablero de juego
+ */
 function create_matrix(w, h) {
   const matrix = []
   while (h !== 0) {
@@ -65,6 +75,11 @@ function create_matrix(w, h) {
   return matrix;
 }
 
+/**
+ * Verifica si la pieza del jugador colisiono
+ * con los limites del tablero o no.
+ * @returns {boolean} - True si colisiono, False si no colisiono
+ */
 function collide() {
   const matrix = player.piece.piece;
   const offset_x = (player.x - 10) / cell_size;
@@ -79,6 +94,10 @@ function collide() {
   return false;
 }
 
+/**
+ * Dibuja el tablero en el canvas
+ * @param {JSON} pos - Posicion en X y en Y a empezar a dibujar. 
+ */
 function draw_board(pos) {
   context.fillStyle = "black";
   context.fillRect(pos.x, pos.y, board[0].length * cell_size, board.length * cell_size);
@@ -93,6 +112,10 @@ function draw_board(pos) {
   });
 }
 
+/**
+ * Guarda los datos del jugador en caso de que este supere
+ * el record anterior de puntaje.
+ */
 function game_over() {
   let username = document.getElementById("username").value;
   player.store(username, best_player);
@@ -101,12 +124,19 @@ function game_over() {
   gameOver = !gameOver;
 }
 
+/**
+ * Sube de nivel y aumenta la dificultad del juego.
+ * @param {number} interval - Cantidad de lineas adicionales para subir otro nivel
+ */
 function level_up(interval) {
   level++;
   dropInterval -= level * 5;
   lineInterval += interval;
 }
 
+/**
+ * "Inserta" la pieza del jugador al tablero de juego
+ */
 function merge() {
   player.piece.piece.forEach((row, y) => {
     row.forEach((value, x) => {
@@ -117,6 +147,9 @@ function merge() {
   });
 }
 
+/**
+ * Limpia el tablero de juego.
+ */
 function restart(){
   for (let y = 0; y < board.length; y++) {
     board[y].fill(0);
@@ -131,6 +164,12 @@ function restart(){
   gameOver = false;
 }
 
+/**
+ * Mueve al jugador horizontalmente. Si el jugador
+ * excede los limites del tablero, lo mueve 
+ * de nuevo en sentido contrario.
+ * @param {number} offset - Cantidad a desplazar.
+ */
 function p_move(offset) {
   player.move(offset);
   if (collide()) {
@@ -138,6 +177,11 @@ function p_move(offset) {
   }
 }
 
+/**
+ * Algoritmo que se encarga de bajar al jugador 1
+ * posicion en el eje Y y luego verificar el estado de la pieza
+ * para finalizar el juego u otra logica.
+ */
 function p_drop() {
   player.drop(cell_size);
   if (collide()) {
@@ -154,6 +198,10 @@ function p_drop() {
   dropCounter = 0;
 }
 
+/**
+ * Rota la pieza del jugador y se encarga de que
+ * esta no exceda los limites del tablero
+ */
 function p_rotate() {
   const pos = player.x;
   let offset = cell_size;
@@ -170,6 +218,9 @@ function p_rotate() {
   }
 }
 
+/**
+ * Dibuja todos los elementos del canvas
+ */
 function render() {
   context.fillStyle = "green";
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -188,6 +239,11 @@ function render() {
   }
 }
 
+/**
+ * Actualiza todos los elementos del canvas
+ *
+ * @param {number} [time=0] - Tiempo inicial
+ */
 function update(time = 0) {
   if (!pause && !gameOver) {
     const deltaTime = time - lastTime;
