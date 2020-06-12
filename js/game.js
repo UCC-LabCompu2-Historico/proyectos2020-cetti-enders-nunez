@@ -25,8 +25,8 @@ const LAST_LEVEL = 18;
 let pause = false;
 let gameOver = false;
 
-let player = new Player();
-let best_player = Player.best;
+let player = new Player(100, 45);
+let best_player = Player.best();
 
 function line_clear() {
   let rowCount = 1;
@@ -96,7 +96,7 @@ function draw_board(pos) {
 function game_over() {
   let username = document.getElementById("username").value;
   player.store(username, best_player);
-  best_player = Player.best;
+  best_player = Player.best();
 
   gameOver = !gameOver;
 }
@@ -134,12 +134,12 @@ function restart(){
 function p_move(offset) {
   player.move(offset);
   if (collide()) {
-    player.x -= offset;
+    player.move(-offset);
   }
 }
 
 function p_drop() {
-  player.drop();
+  player.drop(cell_size);
   if (collide()) {
     if (player.y === 75) {
       game_over();
@@ -159,10 +159,11 @@ function p_rotate() {
   let offset = cell_size;
   player.rotate(1);
   while (collide()) {
-    player.x += offset;
+    player.move(offset);
     offset = -(offset + (offset > 0 ? 30 : -30));
     if (offset / cell_size > player.piece.piece[0].length) {
       player.rotate(-1);
+      player.move(pos);
       player.x = pos;
       return;
     }
