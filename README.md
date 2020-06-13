@@ -19,3 +19,10 @@ Sitio web: [https://ucc-labcompu2.github.io/proyectos2020-cetti-enders-nunez/]()
 * HTML
 * CSS
 * JavaScript
+* [JSDoc](https://jsdoc.app/)
+
+## Documentación
+
+Las funciones del código JavaScript están documentadas siguiendo la estructura del leguaje de marcado JSDoc. Su interfaz nos permite generar un sitio web a partir de la documentación.
+
+Puedes acceder a la documentación [aquí](https://ucc-labcompu2.github.io/proyectos2020-cetti-enders-nunez/docs).
