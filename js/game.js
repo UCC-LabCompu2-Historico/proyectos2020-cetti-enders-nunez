@@ -62,8 +62,8 @@ function line_clear() {
 
 /**
  * Crea el tablero de juego.
- * @param {number} w - Ancho del tablero
- * @param {number} h - Alto del tablero
+ * @param {number} w - Ancho del tablero.
+ * @param {number} h - Alto del tablero.
  * @returns {Array<Array<number>>} matrix - Tablero de juego
  */
 function create_matrix(w, h) {
@@ -95,7 +95,7 @@ function collide() {
 }
 
 /**
- * Dibuja el tablero en el canvas
+ * Dibuja el tablero en el canvas.
  * @param {JSON} pos - Posicion en X y en Y a empezar a dibujar. 
  */
 function draw_board(pos) {
@@ -113,6 +113,27 @@ function draw_board(pos) {
 }
 
 /**
+ * Dibuja un menú de ayuda para el jugador cuando el mismo ha perdido.
+ */
+function draw_game_over() {
+  context.font = "25px serif";
+  context.fillStyle = "white";
+  context.fillText("Game Over", 95, 200);
+  context.fillText(`Puntaje: ${player.score}`, 95, 235);
+  context.font = "20px serif";
+  context.fillText("Presiona R para reiniciar", 65, 265);
+}
+
+/**
+ * Dibuja el ícono de pausa.
+ */
+function draw_pause() {
+  context.fillStyle = "white";
+  context.fillRect(260, 60, 8, 30);
+  context.fillRect(275, 60, 8, 30);
+}
+
+/**
  * Guarda los datos del jugador en caso de que este supere
  * el record anterior de puntaje.
  */
@@ -126,7 +147,7 @@ function game_over() {
 
 /**
  * Sube de nivel y aumenta la dificultad del juego.
- * @param {number} interval - Cantidad de lineas adicionales para subir otro nivel
+ * @param {number} interval - Cantidad de líneas adicionales para subir otro nivel.
  */
 function level_up(interval) {
   level++;
@@ -135,7 +156,7 @@ function level_up(interval) {
 }
 
 /**
- * "Inserta" la pieza del jugador al tablero de juego
+ * "Inserta" la pieza del jugador al tablero de juego.
  */
 function merge() {
   player.piece.piece.forEach((row, y) => {
@@ -166,7 +187,7 @@ function restart(){
 
 /**
  * Mueve al jugador horizontalmente. Si el jugador
- * excede los limites del tablero, lo mueve 
+ * excede los límites del tablero, lo mueve
  * de nuevo en sentido contrario.
  * @param {number} offset - Cantidad a desplazar.
  */
@@ -179,8 +200,8 @@ function p_move(offset) {
 
 /**
  * Algoritmo que se encarga de bajar al jugador 1
- * posicion en el eje Y y luego verificar el estado de la pieza
- * para finalizar el juego u otra logica.
+ * posición en el eje Y y luego verificar el estado de la pieza
+ * para finalizar el juego u otra lógica.
  */
 function p_drop() {
   player.drop(cell_size);
@@ -200,7 +221,7 @@ function p_drop() {
 
 /**
  * Rota la pieza del jugador y se encarga de que
- * esta no exceda los limites del tablero
+ * ésta no exceda los límites del tablero.
  */
 function p_rotate() {
   const pos = player.x;
@@ -219,7 +240,7 @@ function p_rotate() {
 }
 
 /**
- * Dibuja todos los elementos del canvas
+ * Dibuja todos los elementos del canvas.
  */
 function render() {
   context.fillStyle = "green";
@@ -240,9 +261,8 @@ function render() {
 }
 
 /**
- * Actualiza todos los elementos del canvas
- *
- * @param {number} [time=0] - Tiempo inicial
+ * Actualiza todos los elementos del canvas.
+ * @param {number} [time=0] - Tiempo inicial.
  */
 function update(time = 0) {
   if (!pause && !gameOver) {
@@ -257,17 +277,10 @@ function update(time = 0) {
     lastTime = time;
 
     render();
-  } else if (pause && !gameOver){
-    context.fillStyle = "white";
-    context.fillRect(260, 60, 8, 30);
-    context.fillRect(275, 60, 8, 30);
-  }else{
-    context.font = "25px serif";
-    context.fillStyle = "white";
-    context.fillText(`Game Over`, 95, 200);
-    context.fillText(`Puntaje: ${player.score}`, 95, 235);
-    context.font = "20px serif";
-    context.fillText(`Preciona R para reiniciar`, 65, 265);
+  } else if (pause && !gameOver) {
+    draw_pause();
+  } else {
+    draw_game_over();
   }
   requestAnimationFrame(update);
 }
@@ -284,7 +297,7 @@ document.addEventListener("keydown", event => {
       p_move(cell_size);
       break;
     case DOWN_ARROW_KEY:
-      if(!gameOver){
+      if(!gameOver) {
         p_drop();
       }
       break;

@@ -18,9 +18,8 @@ music_player.volume = 0.25;
 music_player.load();
 
 /**
- * Reproduce la cancion asignada.
- *
- * @param {string} song - Cancion a reproducir
+ * Reproduce la canción asignada.
+ * @param {string} song - Canción a reproducir.
  */
 function play_music(song){
   music_player.src = "/assets/"+song;

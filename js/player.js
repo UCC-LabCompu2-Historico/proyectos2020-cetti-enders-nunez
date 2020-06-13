@@ -96,6 +96,7 @@ class Player {
       localStorage.setItem("player", player_json);
     }
   }
+
 }
 
 export default Player;
