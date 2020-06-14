@@ -10,6 +10,7 @@ const RIGHT_ARROW_KEY = 39;
 const DOWN_ARROW_KEY = 40;
 const P_KEY = 80;
 const R_KEY = 82;
+const SPACEBAR = 32;
 
 let dropCounter = 0;
 let dropInterval = 1000;
@@ -143,6 +144,16 @@ function game_over() {
   best_player = Player.best();
 
   gameOver = !gameOver;
+}
+/**
+ * Deja caer inmediatamente la pieza.
+ *
+ */
+function hard_drop(){
+  console.log(player.y)
+  while(player.y != player.start_y || player.x != player.start_x){
+    p_drop();
+  }
 }
 
 /**
@@ -307,6 +318,10 @@ document.addEventListener("keydown", event => {
     case R_KEY:
       restart();
       break;
+      case SPACEBAR:
+        if(!gameOver && !pause){
+          hard_drop();
+        }
     default:
       break;
   }
