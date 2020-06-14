@@ -17,6 +17,10 @@ music_player.src = "/assets/halo_theme.mp3";
 music_player.volume = 0.25;
 music_player.load();
 
+/**
+ * Reproduce la canción asignada.
+ * @param {string} song - Canción a reproducir.
+ */
 function play_music(song){
   music_player.src = "/assets/"+song;
   music_player.load();
