@@ -1,3 +1,4 @@
+import colors from "./colors.js";
 import Player from "./player.js";
 
 const canvas = document.getElementById("board");
@@ -106,7 +107,7 @@ function draw_board(pos) {
   board.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        context.fillStyle = "red";
+        context.fillStyle = colors[value];
         context.fillRect(pos.x + (cell_size * x), pos.y + (cell_size * y), cell_size, cell_size);
       }
     });
