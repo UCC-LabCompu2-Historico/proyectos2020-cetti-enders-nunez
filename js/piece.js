@@ -1,3 +1,4 @@
+import colors from "./colors.js";
 import { T, O, L, J, I, S, Z } from "./pieces.js";
 
 const pieces = "TOLJISZ";
@@ -46,7 +47,7 @@ class Piece {
     this.piece.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value !== 0) {
-          context.fillStyle = "red";
+          context.fillStyle = colors[value];
           context.fillRect(pos_x + (x * 30), pos_y + (y * 30), 30, 30);
         }
       });
