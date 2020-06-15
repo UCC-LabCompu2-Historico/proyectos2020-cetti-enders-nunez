@@ -117,12 +117,12 @@ function draw_board(pos) {
  * Dibuja un menú de ayuda para el jugador cuando el mismo ha perdido.
  */
 function draw_game_over() {
-  context.font = "25px serif";
+  context.font = "25px bodyFont";
   context.fillStyle = "white";
   context.fillText("Game Over", 95, 200);
-  context.fillText(`Puntaje: ${player.score}`, 95, 235);
-  context.font = "20px serif";
-  context.fillText("Presiona R para reiniciar", 65, 265);
+  context.font = "18px bodyFont";
+  context.fillText(`Puntaje: ${player.score}`, 60, 235);
+  context.fillText("Presiona R para reiniciar", 60, 265);
 }
 
 /**
@@ -150,7 +150,6 @@ function game_over() {
  *
  */
 function hard_drop(){
-  console.log(player.y)
   while(player.y != player.start_y || player.x != player.start_x){
     p_drop();
   }
@@ -254,20 +253,21 @@ function p_rotate() {
  * Dibuja todos los elementos del canvas.
  */
 function render() {
-  context.fillStyle = "green";
-  context.fillRect(0, 0, canvas.width, canvas.height);
-
+  context.clearRect(0,0, canvas.width, canvas.height)
   draw_board({ x: 10, y: 45 });
   player.draw(context);
 
-  context.font = "30px serif";
-  context.fillText(document.getElementById("username").value, 0, 20);
-  context.fillText(player.score, canvas.width - 100, 50);
-  context.fillText(`Nivel: ${level}`, 320, 200);
-  context.fillText(`Lineas: ${lineCounter}`, 320, 150);
-  context.fillText("Top player", 320, 460);
+  context.fillStyle = "white";
+  context.font = "30px bodyFont";
+  context.fillText(`${document.getElementById("username").value} | Puntaje: ${player.score}`, 10, 30);
+  context.fillText(`Siguiente:`, 320, 100);
+  context.fillText(`Nivel: ${level}`, 320, 300);
+  context.fillText(`Lineas: ${lineCounter}`, 320, 350);
+  context.fillText("Top player", 320, 575);
   if (best_player !== null) {
-    context.fillText(`${best_player.username} ${best_player.score}`, 320, 500);
+    context.fillText(`${best_player.username}`, 320, 625);
+    context.font = "25px bodyFont";
+    context.fillText(`Score: ${best_player.score}`, 320, 675);
   }
 }
 

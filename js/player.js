@@ -39,7 +39,7 @@ class Player {
    */
   draw(context) {
     this.piece.draw(context, this.x, this.y);
-    this.next_piece.draw(context, 360, 320);
+    this.next_piece.draw(context, 360, 125);
   }
 
   /**
