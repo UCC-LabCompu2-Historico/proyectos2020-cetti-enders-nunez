@@ -10,7 +10,7 @@ class Piece {
    * Crea una instancia de la clase "Piece".
    */
   constructor() {
-    this.type = pieces[pieces.length * Math.random() | 0]
+    this.type = pieces[pieces.length * Math.random() | 0];
     this.piece = this.create_piece();
   }
 

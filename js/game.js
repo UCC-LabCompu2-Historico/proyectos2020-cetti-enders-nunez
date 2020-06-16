@@ -146,12 +146,12 @@ function game_over() {
 
   gameOver = !gameOver;
 }
+
 /**
  * Deja caer inmediatamente la pieza.
- *
  */
 function hard_drop(){
-  while(player.y != player.start_y || player.x != player.start_x){
+  while (player.y != player.start_y || player.x != player.start_x) {
     p_drop();
   }
 }
@@ -188,7 +188,7 @@ function restart(){
   }
 
   player.restart();
-  
+
   dropInterval = 1000;
   lineInterval = 10;
   lineCounter = 0;
@@ -219,8 +219,7 @@ function p_drop() {
   if (collide()) {
     if (player.y === 75) {
       game_over();
-    }
-    else {
+    } else {
       player.y -= cell_size;
       merge(board, player);
       player.reset();
@@ -254,7 +253,8 @@ function p_rotate() {
  * Dibuja todos los elementos del canvas.
  */
 function render() {
-  context.clearRect(0,0, canvas.width, canvas.height)
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
   draw_board({ x: 10, y: 45 });
   player.draw(context);
 

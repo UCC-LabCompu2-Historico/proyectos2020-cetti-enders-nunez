@@ -17,20 +17,21 @@ let username = document.getElementById("username");
 
 const ENTER_KEY = 13;
 
-music_player.src = "/assets/halo_theme.mp3";
-music_player.volume = 0.20;
-music_player.load();
-
 /**
  * Reproduce la canción asignada.
  * @param {string} song - Canción a reproducir.
  */
 function play_music(song){
-  music_player.src = "/assets/"+song;
+  music_player.src = "/assets/" + song;
   music_player.load();
-  music_player.play()
+  music_player.play();
 }
 
+/**
+ * Cambiar el estilo de un elemento.
+ * @param {Element} element - Elemento a cambiar.
+ * @param {string} display - Nuevo estilo del elemento.
+ */
 function change_display(element, display) {
   element.style.display = display;
 }
@@ -70,11 +71,10 @@ tutorial_btn.onclick = () => {
 }
 
 music_btn.onclick = () => {
-  if(music_player.muted === true) {
+  if (music_player.muted) {
     music_player.muted = false;
     music_img.src = "/assets/no_mute.png"
-  }
-  else {
+  } else {
     music_player.muted = true;
     music_img.src = "/assets/mute.png"
   }
@@ -84,16 +84,10 @@ username.addEventListener("keydown", event => {
   if (event.keyCode === ENTER_KEY) {
     if (username.value === "") {
       alert("Por favor ingrese un nombre válido.");
-      return
+      return;
     }
     change_display(user_input, "none");
     setTimeout(() => { play() }, 700);
     play_music("tetris_theme.mp3");
   }
 })
-
-
-document.body.addEventListener("mousemove", function () {
-  music_player.play();
-})
-

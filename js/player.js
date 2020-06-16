@@ -67,12 +67,12 @@ class Player {
     this.x = this.start_x;
     this.y = this.start_y;
   }
-/**
- * Volver al jugador a una posición inicial, crea dos nuevas piezas y vuelve el puntaje del jugador a 0.
- *
- * @memberof Player
- */
-restart(){
+
+  /**
+   * Volver al jugador a una posición inicial, crea dos nuevas piezas y vuelve
+   * el puntaje del jugador a 0.
+   */
+  restart() {
     this.piece = new Piece();
     this.next_piece = new Piece();
     this.x = this.start_x;
