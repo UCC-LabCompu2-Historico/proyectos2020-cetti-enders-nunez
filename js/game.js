@@ -187,8 +187,8 @@ function restart(){
     board[y].fill(0);
   }
 
-  player.reset();
-  player.score = 0;
+  player.restart();
+  
   dropInterval = 1000;
   lineInterval = 10;
   lineCounter = 0;

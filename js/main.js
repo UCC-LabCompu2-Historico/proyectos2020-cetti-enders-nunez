@@ -18,7 +18,7 @@ let username = document.getElementById("username");
 const ENTER_KEY = 13;
 
 music_player.src = "/assets/halo_theme.mp3";
-music_player.volume = 0.25;
+music_player.volume = 0.20;
 music_player.load();
 
 /**
@@ -28,7 +28,7 @@ music_player.load();
 function play_music(song){
   music_player.src = "/assets/"+song;
   music_player.load();
-  // music_player.play()
+  music_player.play()
 }
 
 function change_display(element, display) {
@@ -39,7 +39,6 @@ back_game_btn.onclick = () => {
   change_display(back_game_btn, "none");
   change_display(game, "none");
   change_display(menu, "flex");
-  play_music("halo_theme.mp3")
 }
 
 back_tuto_btn.onclick = () => {
@@ -93,8 +92,8 @@ username.addEventListener("keydown", event => {
   }
 })
 
-/*
+
 document.body.addEventListener("mousemove", function () {
   music_player.play();
 })
-*/
+
