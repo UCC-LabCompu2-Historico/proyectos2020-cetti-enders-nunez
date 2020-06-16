@@ -26,7 +26,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Player from "./player.js";
+            <pre class="prettyprint source linenums"><code>import colors from "./colors.js";
+import Player from "./player.js";
 
 const canvas = document.getElementById("board");
 const context = canvas.getContext("2d");
@@ -38,6 +39,7 @@ const RIGHT_ARROW_KEY = 39;
 const DOWN_ARROW_KEY = 40;
 const P_KEY = 80;
 const R_KEY = 82;
+const SPACEBAR = 32;
 
 let dropCounter = 0;
 let dropInterval = 1000;
@@ -133,7 +135,7 @@ function draw_board(pos) {
   board.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        context.fillStyle = "red";
+        context.fillStyle = colors[value];
         context.fillRect(pos.x + (cell_size * x), pos.y + (cell_size * y), cell_size, cell_size);
       }
     });
@@ -144,12 +146,12 @@ function draw_board(pos) {
  * Dibuja un menú de ayuda para el jugador cuando el mismo ha perdido.
  */
 function draw_game_over() {
-  context.font = "25px serif";
+  context.font = "25px bodyFont";
   context.fillStyle = "white";
   context.fillText("Game Over", 95, 200);
-  context.fillText(`Puntaje: ${player.score}`, 95, 235);
-  context.font = "20px serif";
-  context.fillText("Presiona R para reiniciar", 65, 265);
+  context.font = "18px bodyFont";
+  context.fillText(`Puntaje: ${player.score}`, 60, 235);
+  context.fillText("Presiona R para reiniciar", 60, 265);
 }
 
 /**
@@ -171,6 +173,15 @@ function game_over() {
   best_player = Player.best();
 
   gameOver = !gameOver;
+}
+
+/**
+ * Deja caer inmediatamente la pieza.
+ */
+function hard_drop(){
+  while (player.y != player.start_y || player.x != player.start_x) {
+    p_drop();
+  }
 }
 
 /**
@@ -204,8 +215,8 @@ function restart(){
     board[y].fill(0);
   }
 
-  player.reset();
-  player.score = 0;
+  player.restart();
+
   dropInterval = 1000;
   lineInterval = 10;
   lineCounter = 0;
@@ -236,8 +247,7 @@ function p_drop() {
   if (collide()) {
     if (player.y === 75) {
       game_over();
-    }
-    else {
+    } else {
       player.y -= cell_size;
       merge(board, player);
       player.reset();
@@ -271,20 +281,22 @@ function p_rotate() {
  * Dibuja todos los elementos del canvas.
  */
 function render() {
-  context.fillStyle = "green";
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
   draw_board({ x: 10, y: 45 });
   player.draw(context);
 
-  context.font = "30px serif";
-  context.fillText(document.getElementById("username").value, 0, 20);
-  context.fillText(player.score, canvas.width - 100, 50);
-  context.fillText(`Nivel: ${level}`, 320, 200);
-  context.fillText(`Lineas: ${lineCounter}`, 320, 150);
-  context.fillText("Top player", 320, 460);
+  context.fillStyle = "white";
+  context.font = "30px bodyFont";
+  context.fillText(`${document.getElementById("username").value} | Puntaje: ${player.score}`, 10, 30);
+  context.fillText(`Siguiente:`, 320, 100);
+  context.fillText(`Nivel: ${level}`, 320, 300);
+  context.fillText(`Lineas: ${lineCounter}`, 320, 350);
+  context.fillText("Top player", 320, 575);
   if (best_player !== null) {
-    context.fillText(`${best_player.username} ${best_player.score}`, 320, 500);
+    context.fillText(`${best_player.username}`, 320, 625);
+    context.font = "25px bodyFont";
+    context.fillText(`Score: ${best_player.score}`, 320, 675);
   }
 }
 
@@ -335,6 +347,11 @@ document.addEventListener("keydown", event => {
     case R_KEY:
       restart();
       break;
+    case SPACEBAR:
+      if(!gameOver &amp;&amp; !pause) {
+        hard_drop();
+      }
+      break;
     default:
       break;
   }
@@ -351,13 +368,13 @@ export default update;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Piece.html">Piece</a></li><li><a href="Player.html">Player</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collide">collide</a></li><li><a href="global.html#create_matrix">create_matrix</a></li><li><a href="global.html#draw_board">draw_board</a></li><li><a href="global.html#draw_game_over">draw_game_over</a></li><li><a href="global.html#draw_pause">draw_pause</a></li><li><a href="global.html#game_over">game_over</a></li><li><a href="global.html#level_up">level_up</a></li><li><a href="global.html#line_clear">line_clear</a></li><li><a href="global.html#merge">merge</a></li><li><a href="global.html#p_drop">p_drop</a></li><li><a href="global.html#p_move">p_move</a></li><li><a href="global.html#p_rotate">p_rotate</a></li><li><a href="global.html#play_music">play_music</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#restart">restart</a></li><li><a href="global.html#update">update</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Piece.html">Piece</a></li><li><a href="Player.html">Player</a></li></ul><h3>Global</h3><ul><li><a href="global.html#change_display">change_display</a></li><li><a href="global.html#collide">collide</a></li><li><a href="global.html#create_matrix">create_matrix</a></li><li><a href="global.html#draw_board">draw_board</a></li><li><a href="global.html#draw_game_over">draw_game_over</a></li><li><a href="global.html#draw_pause">draw_pause</a></li><li><a href="global.html#game_over">game_over</a></li><li><a href="global.html#hard_drop">hard_drop</a></li><li><a href="global.html#level_up">level_up</a></li><li><a href="global.html#line_clear">line_clear</a></li><li><a href="global.html#merge">merge</a></li><li><a href="global.html#p_drop">p_drop</a></li><li><a href="global.html#p_move">p_move</a></li><li><a href="global.html#p_rotate">p_rotate</a></li><li><a href="global.html#play_music">play_music</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#restart">restart</a></li><li><a href="global.html#update">update</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Sat Jun 13 2020 12:23:47 GMT-0300 (Argentina Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Tue Jun 16 2020 16:47:37 GMT-0300 (Argentina Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
