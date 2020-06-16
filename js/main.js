@@ -12,6 +12,7 @@ let start_game_btn = document.getElementById("start_game_btn");
 let tutorial_btn = document.getElementById("tutorial_btn");
 let music_img = document.getElementById("music_img");
 let music_player = document.getElementById("music_player");
+music_player.volume = 0.20;
 
 let username = document.getElementById("username");
 
