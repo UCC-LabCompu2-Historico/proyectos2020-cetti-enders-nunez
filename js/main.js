@@ -22,7 +22,7 @@ const ENTER_KEY = 13;
  * @param {string} song - Canción a reproducir.
  */
 function play_music(song){
-  music_player.src = "/assets/" + song;
+  music_player.src = "assets/" + song;
   music_player.load();
   music_player.play();
 }
@@ -73,10 +73,10 @@ tutorial_btn.onclick = () => {
 music_btn.onclick = () => {
   if (music_player.muted) {
     music_player.muted = false;
-    music_img.src = "/assets/no_mute.png"
+    music_img.src = "assets/no_mute.png"
   } else {
     music_player.muted = true;
-    music_img.src = "/assets/mute.png"
+    music_img.src = "assets/mute.png"
   }
 }
 
