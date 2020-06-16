@@ -13,6 +13,10 @@ let tutorial_btn = document.getElementById("tutorial_btn");
 let music_img = document.getElementById("music_img");
 let music_player = document.getElementById("music_player");
 
+let username = document.getElementById("username");
+
+const ENTER_KEY = 13;
+
 music_player.src = "/assets/halo_theme.mp3";
 music_player.volume = 0.25;
 music_player.load();
@@ -51,9 +55,13 @@ game_btn.onclick = () => {
 }
 
 start_game_btn.onclick = () => {
+  if (username.value === "") {
+    alert("Por favor ingrese un nombre válido.");
+    return
+  }
   change_display(user_input, "none");
   setTimeout(() => { play() }, 700);
-  play_music("tetris_theme.mp3")
+  play_music("tetris_theme.mp3");
 }
 
 tutorial_btn.onclick = () => {
@@ -72,6 +80,18 @@ music_btn.onclick = () => {
     music_img.src = "/assets/mute.png"
   }
 }
+
+username.addEventListener("keydown", event => {
+  if (event.keyCode === ENTER_KEY) {
+    if (username.value === "") {
+      alert("Por favor ingrese un nombre válido.");
+      return
+    }
+    change_display(user_input, "none");
+    setTimeout(() => { play() }, 700);
+    play_music("tetris_theme.mp3");
+  }
+})
 
 /*
 document.body.addEventListener("mousemove", function () {

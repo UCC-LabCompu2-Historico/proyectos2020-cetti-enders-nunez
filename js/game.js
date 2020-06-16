@@ -319,10 +319,11 @@ document.addEventListener("keydown", event => {
     case R_KEY:
       restart();
       break;
-      case SPACEBAR:
-        if(!gameOver && !pause){
-          hard_drop();
-        }
+    case SPACEBAR:
+      if(!gameOver && !pause) {
+        hard_drop();
+      }
+      break;
     default:
       break;
   }
