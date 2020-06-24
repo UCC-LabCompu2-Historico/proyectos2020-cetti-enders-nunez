@@ -1,3 +1,20 @@
+.control {
+  text-align: center;
+  margin: 0 auto;
+}
+
+#down_arrow {
+  transform: rotate(180deg);
+}
+
+.key {
+  width: 75px;
+}
+
+#L_R_arrows {
+  width: 150px;
+}
+
 #tutorial {
   display: none;
   flex-direction: column;
@@ -10,26 +27,8 @@
   flex-direction: column;
 }
 
-#L_R_arrows {
-  width: 150px;
-}
-
-#up_arrow {
-  width: 75px;
-}
-
-#down_arrow {
-  width: 75px;
-  transform: rotate(180deg);
-}
-
 .tuto_controls {
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-gap: 20px;
-}
-
-.control {
-  text-align: center;
-  margin: 0 auto;
 }
