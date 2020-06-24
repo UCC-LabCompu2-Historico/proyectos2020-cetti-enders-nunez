@@ -1,4 +1,5 @@
 import colors from "./colors.js";
+import { mute_music } from "./main.js";
 import Player from "./player.js";
 
 const canvas = document.getElementById("board");
@@ -9,6 +10,7 @@ const LEFT_ARROW_KEY = 37;
 const UP_ARROW_KEY = 38;
 const RIGHT_ARROW_KEY = 39;
 const DOWN_ARROW_KEY = 40;
+const M_KEY = 77;
 const P_KEY = 80;
 const R_KEY = 82;
 const SPACEBAR = 32;
@@ -312,6 +314,9 @@ document.addEventListener("keydown", event => {
       if(!gameOver) {
         p_drop();
       }
+      break;
+    case M_KEY:
+      mute_music();
       break;
     case P_KEY:
       pause = !pause;

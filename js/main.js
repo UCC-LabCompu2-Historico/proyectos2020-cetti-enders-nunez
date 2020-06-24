@@ -22,10 +22,23 @@ const ENTER_KEY = 13;
  * Reproduce la canción asignada.
  * @param {string} song - Canción a reproducir.
  */
-function play_music(song){
+function play_music(song) {
   music_player.src = "assets/" + song;
   music_player.load();
   music_player.play();
+}
+
+/**
+ * Silencia la canción principal.
+ */
+export function mute_music() {
+  if (music_player.muted) {
+    music_player.muted = false;
+    music_img.src = "assets/no_mute.png"
+  } else {
+    music_player.muted = true;
+    music_img.src = "assets/mute.png"
+  }
 }
 
 /**
@@ -71,15 +84,7 @@ tutorial_btn.onclick = () => {
   change_display(tutorial, "flex");
 }
 
-music_btn.onclick = () => {
-  if (music_player.muted) {
-    music_player.muted = false;
-    music_img.src = "assets/no_mute.png"
-  } else {
-    music_player.muted = true;
-    music_img.src = "assets/mute.png"
-  }
-}
+music_btn.onclick = () => { mute_music(); }
 
 username.addEventListener("keydown", event => {
   if (event.keyCode === ENTER_KEY) {
